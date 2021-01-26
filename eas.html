@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<button style="font-size: 16px; margin-bottom: 2%;"  id="reset-button">Reset</button>
+<button style="font-size: 16px; margin-bottom: 2%;"  id="createnew-button">Create New</button>
+
+
+<style>
+.row {
+    border:0.5px solid rgb(0, 0, 0);  
+    height:16px;
+    width: auto;  }
+  
+  .box {
+    display:inline-block;
+    width:16px;
+    height:16px;
+    border:0.5px solid rgb(0, 0, 0); 
+  }
+  
+  </style>
+
+ <script>
+grid(document.body);
+
+function grid(el) {
+    var container = document.createElement("div");
+    container.id = "main";
+    container.className = "container";
+    var vertical = prompt("How many grids vertically? Max 50.");
+    var horizontal = prompt("How many grids horizontally? Max 50.");
+
+    for (i=0; i<vertical && vertical<=50; i+=1) {
+        var row = document.createElement("div");
+        row.className = "row";
+        var width = horizontal*18 + "px";
+        row.style.setProperty("width", width);
+        row.id = "row" + i;
+      
+        for (k=0; k<horizontal && horizontal<=50; k+=1) {
+            var box = document.createElement("div"); 
+            box.className = "box";
+            box.id = "box" + (i*horizontal+k);
+            box.addEventListener("mouseover", changeColor)
+            row.appendChild(box);
+        };
+      
+        container.appendChild(row);      
+    };
+  
+    el.appendChild(container);
+};
+
+
+function runGrid() {
+    removeOld();
+grid(document.body);
+}
+
+function removeOld () {
+    var paragraphs = document.querySelectorAll('div');
+    for (var i = 0; i < paragraphs.length; ++i) {
+  paragraphs[i].remove();
+}
+}
+
+
+function changeColor (event){
+    var whichGrid = document.getElementById(event.target.id);
+    whichGrid.style = "background-color: black";
+}
+
+function resetColor () {
+for (var i = 0; i < 10000; i++) {
+    var gridToReset = document.getElementById("box"+i);
+    gridToReset.style = "background-color: white";
+
+}
+
+}
+
+var resetButton = document.getElementById("reset-button");
+resetButton.addEventListener("click", resetColor);
+
+var createNewButton = document.getElementById("createnew-button");
+createNewButton.addEventListener("click", runGrid);
+
+ </script>   
+    
+</body>
+</html>
